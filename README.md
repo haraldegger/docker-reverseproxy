@@ -50,7 +50,6 @@ As mentioned before, everyhing we need we can find in the /srv/ directory:
 - */srv/data/cfg/*: This folder contains all configuration files, for example the config file of the nginx server itself and for each individual website.
 - */srv/data/log/*: This folder contains all log files. Be aware that most logging is done in a way that docker can read it, so you will find most logs there.
 - */srv/tmp/*: This folder contains the temporary files- 
-- */srv/www/*: This folder contains the default website and the files required for letsencrypts handshake
 
 [Debian]: https://www.debian.org/
 [reverse proxy]: https://en.wikipedia.org/wiki/Reverse_proxy
