@@ -11,8 +11,9 @@ echo "Starting ssh..."
 ssh-keygen -A
 /usr/sbin/sshd -D -e&
 #-------------------------------------------------------------------------#
-echo "Creating self signed certificate..."
+echo "Updating all certificate..."
 openssl req -newkey rsa:4096 -x509 -sha256 -days 3650 -nodes -out /srv/data/cert/localhost.crt -keyout /srv/data/cert/localhost.key -subj "/C=/ST=/L=/O=/OU=/CN=localhost"
+/srv/bin/cert_renew_all.sh
 #-------------------------------------------------------------------------#
 echo "Starting nginx..."
 if [ -f "/srv/data/cfg/nginx.cfg" ]; then

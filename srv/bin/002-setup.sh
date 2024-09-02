@@ -24,10 +24,20 @@ if [ -z ${MY_PASSWORD+x} ]; then
     echo "sleep 60" >> /srv/bin/start.sh
     exit
 fi
+if [ -z ${MY_EMAIL+x} ]; then
+    echo "At least one ENV variable was not provided, please recreate the container and pass MY_EMAIL to it"
+    echo "#!/bin/sh" > /srv/bin/start.sh
+    echo "echo At least one ENV variable was not provided, please recreate the container and pass MY_EMAIL to it" >> /srv/bin/start.sh
+    echo "sleep 60" >> /srv/bin/start.sh
+    exit
+fi
 useradd $MY_USERNAME
 echo "$MY_USERNAME:$MY_PASSWORD" | chpasswd
 usermod -g root $MY_USERNAME
 usermod -d /srv/ $MY_USERNAME
+#-------------------------------------------------------------------------#
+echo "Generating dhparam..."
+openssl dhparam -out /srv/data/cert/dhparam.pem 2048
 #-------------------------------------------------------------------------#
 echo "Setting up folder rights..."
 chmod -R 775 /srv/*
@@ -46,4 +56,10 @@ echo "PermitTunnel no" >> /etc/ssh/sshd_config
 echo "Subsystem sftp internal-sftp" >> /etc/ssh/sshd_config
 echo "ForceCommand internal-sftp" >> /etc/ssh/sshd_config
 echo "ChrootDirectory %h" >> /etc/ssh/sshd_config
+#-------------------------------------------------------------------------#
+echo "Setting up cronjobs..."
+echo "# m h dom mon dow command" >> /var/spool/cron/crontabs/root
+echo "00 00 * * 07 /srv/bin/cert_renew_all.sh; nginx -s reload"
+chmod 600 /var/spool/cron/crontabs/root 
+chown root:crontab /var/spool/cron/crontabs/root
 #-------------------------------------------------------------------------#

@@ -52,7 +52,7 @@ def Dockerize(repository, project):
     print("=== Finished ===")
     print("Use the following commands to launch the newly create docker image")
     print("docker load --input \"" + tgzPath + "\"")
-    print("docker run --name putyournamehere --restart=always -p 80:80 -p 443:443 -p 1001:22 -e MY_USERNAME=\"username\" -e MY_PASSWORD=\"password\" " + repository + "/" + project)
+    print("docker run --name putyournamehere --restart=always -p 80:80 -p 443:443 -p 1001:22 -e MY_USERNAME=\"username\" -e MY_PASSWORD=\"password\" -e MY_EMAIL=\"email\" " + repository + "/" + project)
     
     #and a reminder how to upload to docker hub
     print("=== Upload to docker hub ===")

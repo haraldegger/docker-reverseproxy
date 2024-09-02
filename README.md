@@ -33,13 +33,14 @@ This service is thought to be working hand in hand with other web servoces, whic
 All scripts and data and everything is saved in the /srv/ folder. If you want to backup or restore your data, everything you need to care about is in the /srv/data/ folder.\
 \
 **Use the following script to create the docker container:**\
-docker run --name *NAME* --restart=always -p 80:80 -p 443:443 -p *SFTPPORT*:22 -e MY_USERNAME="*USERNAME*" -e MY_PASSWORD="*PASSWORD*" -e MY_PACKAGES="*PACKAGES*" haraldegger/docker-reverseproxy
+docker run --name *NAME* --restart=always -p 80:80 -p 443:443 -p *SFTPPORT*:22 -e MY_USERNAME="*USERNAME*" -e MY_PASSWORD="*PASSWORD*" -e MY_EMAIL="*EMAIL*" -e MY_PACKAGES="*PACKAGES*" haraldegger/docker-reverseproxy
 - *NAME*: Name of the instance, we suggest to use the name of the domain, f.ex. github.com
 - *SFTPPORT*: Port through which you can connect via SFTP, you need to provide this port only when you want to access your files, f.ex. 10022
 - *USERNAME*: Username for the SFTP connection, we recommend to not use an easy to guess user, f.ex. jamesbond006
 - *PASSWORD*: Password for the SFTP connection, we commend a very secure password, f.ex. 5RL8~BaJCjw}bW48LL7,wM;P4b7z[7)D,bWctj$0g-y.qN>K,<
+- *EMAIL*: Email for the certification, it will notify you before the certificate expires
 - *PACKAGES*: You can specify additional packages, which you want to have installed and we did not forsee, most of the time you will not need this
-- Summarizing the above you will get the following command: *docker run --name ReverseProxy --restart=always -p 80:80 -p 443:443 -p 10022:22 -e MY_USERNAME="jamesbond006" -e MY_PASSWORD="5RL8~BaJCjw}bW48LL7,wM;P4b7z[7)D,bWctj$0g-y.qN>K,<" haraldegger/docker-reverseproxy*
+- Summarizing the above you will get the following command: *docker run --name ReverseProxy --restart=always -p 80:80 -p 443:443 -p 10022:22 -e MY_USERNAME="jamesbond006" -e MY_PASSWORD="5RL8~BaJCjw}bW48LL7,wM;P4b7z[7)D,bWctj$0g-y.qN>K,<" MY_EMAIL="info@haraldegger.com" haraldegger/docker-reverseproxy*
 
 **Internal data structure**\
 As mentioned before, everyhing we need we can find in the /srv/ directory:
